@@ -8,11 +8,11 @@ def pin_to_ipfs(data):
 	payload = json.dumps(data)
     
     #authenticate with the Pinata API and 
-	keys = {'API Key': '84b66ca04d948cc54795', 'API Secret':'45035279697aa2adf024d17ed801eaed2f6ec6d8b5b7084553b562676de966ea'}
+	api_keys = {'API Key': '84b66ca04d948cc54795', 'API Secret':'45035279697aa2adf024d17ed801eaed2f6ec6d8b5b7084553b562676de966ea'}
 	url = "https://api.pinata.cloud/pinning/pinJSONToIPFS"
 
     #set up headers for api call
-	headers = {'Content-Type': 'application/json',"pinata_api_key": keys["API Key"], "pinata_secret_api_key": keys["API Secret"]}
+	headers = {'Content-Type': 'application/json',"pinata_api_key": api_keys["API Key"], "pinata_secret_api_key": api_keys["API Secret"]}
 
     #Sends a POST request to the Pinata API to pin the JSON data to IPFS including the URL, headers, and payload, which contains the JSON data to be pinned.
 	response = requests.request("POST", url, headers=headers, data=payload)
