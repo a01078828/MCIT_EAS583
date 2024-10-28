@@ -7,12 +7,12 @@ from web3.providers.rpc import HTTPProvider
 
 # If you use one of the suggested infrastructure providers, the url will be of the form
 # now_url  = f"https://eth.nownodes.io/{now_token}"
-# alchemy_url = f"https://eth-mainnet.alchemyapi.io/v2/{alchemy_token}"
+# alchemy_url = f"https://eth-mainnet.g.alchemy.com/v2/AnW2HdWQw7PvmbZZC6ZxVoyeMLEUhc4_"
 # infura_url = f"https://mainnet.infura.io/v3/6b6d890b366d4656a902d62edb044ff7"
 
 def connect_to_eth():
 	# TODO insert your code for this method from last week's assignment
-	url = "https://mainnet.infura.io/v3/6b6d890b366d4656a902d62edb044ff7"  # FILL THIS IN
+	url = "https://eth-mainnet.g.alchemy.com/v2/AnW2HdWQw7PvmbZZC6ZxVoyeMLEUhc4_"  # FILL THIS IN
 	w3 = Web3(HTTPProvider(url))
 	assert w3.is_connected(), f"Failed to connect to provider at {url}"
 	return w3
