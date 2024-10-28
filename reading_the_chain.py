@@ -8,7 +8,7 @@ from web3.providers.rpc import HTTPProvider
 # If you use one of the suggested infrastructure providers, the url will be of the form
 # now_url  = f"https://eth.nownodes.io/{now_token}"
 # alchemy_url = f"https://eth-mainnet.alchemyapi.io/v2/{alchemy_token}"
-# infura_url = f"https://mainnet.infura.io/v3/{infura_token}"
+# infura_url = f"https://mainnet.infura.io/v3/6b6d890b366d4656a902d62edb044ff7"
 
 def connect_to_eth():
 	# TODO insert your code for this method from last week's assignment
@@ -47,7 +47,7 @@ def is_ordered_block(w3, block_num):
 	Conveniently, most type 2 transactions set the gasPrice field to be min( tx.maxPriorityFeePerGas + block.baseFeePerGas, tx.maxFeePerGas )
 	"""
 	block = w3.eth.get_block(block_num)
-	ordered = False
+	ordered = True
 	lastGP = float('inf')
 
 	# TODO YOUR CODE HERE
