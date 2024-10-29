@@ -37,7 +37,7 @@ def get_ape_info(apeID):
 	owner = contract.functions.ownerOf(apeID).call()
 	data['owner'] = owner
 	
-  ipfs_gateway = "https://ipfs.io/ipfs/"
+	ipfs_gateway = "https://ipfs.io/ipfs/"
 
 	uri = contract.functions.tokenURI(apeID).call()
 	ipfs = uri.replace("ipfs://", "")
