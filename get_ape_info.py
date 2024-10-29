@@ -28,8 +28,7 @@ def get_ape_info(apeID):
 	data = {'owner': "", 'image': "", 'eyes': "" }
 	
 	#YOUR CODE HERE	
-
-	contract = web3.eth.contract(address=contract_address, abi=abi)
+  contract = web3.eth.contract(address=contract_address, abi=abi)
   data['owner'] = contract.functions.ownerOf(apeID).call()
   
   ipfs = contract.functions.tokenURI(apeID).call()
