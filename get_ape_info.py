@@ -30,29 +30,27 @@ def get_ape_info(apeID):
 	#YOUR CODE HERE	
 
 	contract = web3.eth.contract(address=contract_address, abi=abi)
-    	data['owner'] = contract.functions.ownerOf(apeID).call()
+  data['owner'] = contract.functions.ownerOf(apeID).call()
+  
+  ipfs = contract.functions.tokenURI(apeID).call()
+  header = "ipfs://"
 
-    	ipfs = contract.functions.tokenURI(apeID).call()
-    	
-	header = "ipfs://"
+  short_ipfs = ipfs[len(header):]
 
-    	short_ipfs = ipfs[len(header):]
+  url = 'https://gateway.pinata.cloud/ipfs/' + short_ipfs
+  meta = requests.get(url).json()
 
-	url = 'https://gateway.pinata.cloud/ipfs/' + short_ipfs
-	meta = requests.get(url).json()
+  data['image'] = None
+  if 'image' in meta.keys():
+    data['image'] = meta['image']
 
-    	data['image'] = None
-	if 'image' in meta.keys():
-		data['image'] = meta['image']
+  data['eyes'] = None
 
-    	data['eyes'] = None
-
-    	if 'attributes' in meta.keys():
-		for dic in meta['attributes']:
-			if 'trait_type' in dic.keys() and dic['trait_type'] == 'Eyes':
-				data['eyes'] = dic['value']
+  if 'attributes' in meta.keys():
+    for dic in meta['attributes']:
+      if 'trait_type' in dic.keys() and dic['trait_type'] == 'Eyes':
+        data['eyes'] = dic['value']
 
 	assert isinstance(data,dict), f'get_ape_info{apeID} should return a dict' 
 	assert all( [a in data.keys() for a in ['owner','image','eyes']] ), f"return value should include the keys 'owner','image' and 'eyes'"
 	return data
-
