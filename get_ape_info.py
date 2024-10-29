@@ -25,32 +25,30 @@ def get_ape_info(apeID):
 	assert isinstance(apeID,int), f"{apeID} is not an int"
 	assert 1 <= apeID, f"{apeID} must be at least 1"
 
-	# Connect to the contract
+	data = {'owner': "", 'image': "", 'eyes': "" }
+	
+	#YOUR CODE HERE	
+	assert isinstance(apeID,int), f"{apeID} is not an int"
+	assert 1 <= apeID, f"{apeID} must be at least 1"
+
 	contract = web3.eth.contract(address=contract_address, abi=abi)
 
 	data = {'owner': "", 'image': "", 'eyes': "" }
-	
-	# Fetch the owner of the ape
 	owner = contract.functions.ownerOf(apeID).call()
 	data['owner'] = owner
+	
+  ipfs_gateway = "https://ipfs.io/ipfs/"
 
-	# Get the token URI which contains the metadata
-	token_uri = contract.functions.tokenURI(apeID).call()
+	uri = contract.functions.tokenURI(apeID).call()
+	ipfs = uri.replace("ipfs://", "")
+	metadata_url = ipfs_gateway + ipfs
 
-	# Convert IPFS URI to HTTP URL if necessary
-	ipfs_gateway = "https://ipfs.io/ipfs/"
-	ipfs_hash = token_uri.replace("ipfs://", "")
-	metadata_url = ipfs_gateway + ipfs_hash
+	res = requests.get(metadata_url)
+	res.raise_for_status()
+	metadata = res.json()
 
-	# Fetch the metadata from the token URI
-	response = requests.get(metadata_url)
-	response.raise_for_status()  # Ensure the request was successful
-	metadata = response.json()
-
-	# Extract the image URL
 	data['image'] = metadata["image"]
 
-	# Extract the 'eyes' attribute from the metadata
 	for attribute in metadata.get("attributes", []):
 		if attribute.get("trait_type", "").lower() == "eyes":
 			data['eyes'] = attribute.get("value", "")
