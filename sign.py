@@ -10,12 +10,9 @@ def sign(m):
 
     #eth_address = None  # Eth account
     #private_key = None
-
-    # generate signature
-    # your code here
     account = w3.eth.account.create()
-    eth_address = account.address  # Ethereum account address
-    private_key = account.key  # Private key
+    eth_address = account.address
+    private_key = account.key
 
     message = encode_defunct(text=m)
 
