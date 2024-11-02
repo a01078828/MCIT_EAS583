@@ -32,3 +32,4 @@ if __name__ == "__main__":
         challenge = os.urandom(64)
         sig, addr= get_keys(challenge=challenge,keyId=i)
         print( addr )
+ 
