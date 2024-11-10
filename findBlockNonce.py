@@ -19,31 +19,33 @@ def mine_block(k, prev_hash, rand_lines):
         return b'\x00'
 
     # TODO your code to find a nonce here
-    rand_lines_bytes = ''.join(rand_lines).encode()
-
+    rand_lines_combined = ''.join(rand_lines).encode('utf-8')
     target_suffix = '0' * k
 
     nonce = 0
-    while True:
-        nonce_bytes = nonce.to_bytes((nonce.bit_length() + 7) // 8, 'big')
-        hash_input = prev_hash + rand_lines_bytes + nonce_bytes
-        hash_result = hashlib.sha256(hash_input).hexdigest()
 
-        # Convert hash_result to binary form
-        hash_binary = bin(int(hash_result, 16))[2:].zfill(256)  # Convert to binary and ensure it's 256 bits
-        
-        if hash_binary.endswith(target_suffix):
-            break
+    def hash_matches_target(h):
+        # Convert hex hash to binary and check if last k bits are zeros
+        bin_hash = bin(int(h, 16))[2:].zfill(256)
+        return bin_hash[-k:] == target_suffix
+
+    while True:
+        nonce_bytes = str(nonce).encode('utf-8')
+        data = prev_hash + rand_lines_combined + nonce_bytes
+        hash_result = hashlib.sha256(data).hexdigest()
+
+        if hash_matches_target(hash_result):
+            assert isinstance(nonce_bytes, bytes), 'nonce should be of type bytes'
+            return nonce_bytes
+
         nonce += 1
 
-    assert isinstance(nonce, bytes), 'nonce should be of type bytes'
-    return nonce
 
 
 def get_random_lines(filename, quantity):
     """
     This is a helper function to get the quantity of lines ("transactions")
-    as a list from the filename given. 
+    as a list from the filename given.
     Do not modify this function
     """
     lines = []
@@ -68,5 +70,11 @@ if __name__ == '__main__':
     diff = 20
 
     rand_lines = get_random_lines(filename, num_lines)
-    nonce = mine_block(diff, rand_lines)
+
+    prev_hash = hashlib.sha256(
+        b'previous_block').digest()
+
+    nonce = mine_block(diff, prev_hash, rand_lines)
+
+
     print(nonce)
