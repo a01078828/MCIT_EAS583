@@ -169,8 +169,8 @@ def send_signed_msg(proof, random_leaf):
     signed_tx = w3.eth.account.sign_transaction(transaction, private_key=acct.key)
 
     tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
-    tx_hash = w3.to_hex(tx_hash)
-    return tx_hash
+    #tx_hash = w3.to_hex(tx_hash)
+    return w3.to_hex(tx_hash)
 
 
 # Helper functions that do not need to be modified
