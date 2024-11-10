@@ -25,7 +25,6 @@ def mine_block(k, prev_hash, rand_lines):
     nonce = 0
 
     def hash_matches_target(h):
-        # Convert hex hash to binary and check if last k bits are zeros
         bin_hash = bin(int(h, 16))[2:].zfill(256)
         return bin_hash[-k:] == target_suffix
 
