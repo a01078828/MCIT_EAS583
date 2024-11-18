@@ -52,9 +52,9 @@ contract AMM is AccessControl{
 		require( sellToken == tokenA || sellToken == tokenB, 'Invalid token' );
 		require( sellAmount > 0, 'Cannot trade 0' );
 		require( invariant > 0, 'No liquidity' );
-		uint256 qtyA;
-		uint256 qtyB;
-		uint256 swapAmt;
+		//uint256 qtyA;
+		//uint256 qtyB;
+		//uint256 swapAmt;
 
 		//YOUR CODE HERE 
 		uint256 qtyA = ERC20(tokenA).balanceOf(address(this));
@@ -90,7 +90,7 @@ contract AMM is AccessControl{
  		ERC20(tokenA).transferFrom(msg.sender, address(this), amtA);
 		ERC20(tokenB).transferFrom(msg.sender, address(this), amtB);
 		invariant = ERC20(tokenA).balanceOf(address(this)) * ERC20(tokenB).balanceOf(address(this));
-    
+
 		emit LiquidityProvision( msg.sender, amtA, amtB );
 	}
 
