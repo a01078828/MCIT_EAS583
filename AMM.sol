@@ -61,6 +61,7 @@ contract AMM is AccessControl{
 		qtyA = sellAmount * (10000 - feebps) / 10000;
 		qtyB = ERC20(sellToken).balanceOf(address(this));
 		swapAmt = ERC20(buyToken).balanceOf(address(this));
+    
 		require(qtyB + qtyA > qtyB, 'Overflow error');
 		uint256 buyAmount = (swapAmt * qtyA)/(qtyB + qtyA);
 
@@ -80,10 +81,9 @@ contract AMM is AccessControl{
 		//YOUR CODE HERE
 		require(ERC20(tokenA).transferFrom(msg.sender, address(this), amtA), 'transfer of tokenA failed');
 		require(ERC20(tokenB).transferFrom(msg.sender, address(this), amtB), 'Transfer of tokenB failed');
-		if(invariant == 0){
+		if(invariant == 0) {
 			invariant = ERC20(tokenA).balanceOf(address(this)) * ERC20(tokenB).balanceOf(address(this));
-		}
-		else {
+		} else {
 			invariant = invariant * ((ERC20(tokenA).balanceOf(address(this)) * ERC20(tokenB).balanceOf(address(this))) / invariant);
 		}
 		emit LiquidityProvision( msg.sender, amtA, amtB );
