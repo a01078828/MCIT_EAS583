@@ -11,7 +11,7 @@ destination_chain = 'bsc'
 contract_info = "contract_info.json"
 
 warden_address = '0xE1291a15914B145b1b8e4d14262de323FeF41Cc8'
-private_key = '0xdfbd67fb7acd0c83ba59470295385d664433e9498578cf7a619dced30a5838e0'
+private_key = '418065defaaa52b069f5e37c3e20ec43670b0dd568e5beb472fbc8053260b270'
 
 def connectTo(chain):
     if chain == 'avax':
